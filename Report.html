@@ -14275,7 +14275,7 @@ Node 		 Weight-Sum/Distance
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p>Now it's time to create the model. We will create three layers: The input layer, one hidden and the output layer.<br>
  For the input we used .Flatten in order to use each pixel as one neuron (input) resulting to 28x28=784 input neurons.<br>
- On the hidden layer we used 120 neurons (that number is relatively flexible) and the activation function relu, because we needed an output between 0 and 1. We could have used sigmoid or any other similar function, but relu seemed to have a higher accuracy.<br>
+ On the hidden layer we used 120 neurons (that number is relatively flexible) and the activation function relu. We could have used other similar functions, but relu seemed to have a higher accuracy.<br>
  Finally for the output layer, we need 10 neurons, one for each digit. We chose the function softmax because it ranges from 0 to 1, while at the same time the sum of all outputs is 1, corrisponding to 100%. This is convinient, because we are checking how likely it is that the image is each digit, and then selecting the digit with the highest probability.
  </p>
 </div>
