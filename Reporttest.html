@@ -13971,10 +13971,21 @@ a.anchor-link {
 
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><h1>ASAT </h1></p>
+<p><link rel="preconnect" href="https://fonts.googleapis.com"></p>
+<p><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin></p>
+<p><link href="https://fonts.googleapis.com/css2?family=Kaisei+HarunoUmi:wght@500&family=PT+Serif&family=Roboto&display=swap" rel="stylesheet"></p>
 <style>
-    h1{text-align:center}
+    p{
+        font-family: 'Roboto',serif;
+        font-size: 17px;
+        text-align:justify;
+    }
 </style>
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h1 style="text-align:center">ASAT </h1>
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
@@ -13990,14 +14001,15 @@ Subsystem
     <h3>Autopilot Overview</h3>
     <p>For a UAV to be able to function autonomously, an interactive understanding of its environment is essential. To achieve that, the vehicle needs to integrate a series of sensors that will provide information on its location, orientation, speed, altitude, etc. Such sensors are a 3-axis gyroscope, a GPS (Global Positioning System), an accelerometer, an altimeter, and an airspeed sensor. Due to the objective of project Phoenix (fire detection), a thermal and a regular camera are required. For the UAV to be able to communicate and detect other aircraft, it can use ADS-B technology (Automatic Dependent Surveillance-Broadcast). The hardware mentioned above should comply with the pixhawk open standards to avoid unnecessary incompatibilities</p>
     <p>Apart from the sensor's data, the autopilot needs additional input from the user to plan its route accordingly. The user shall specify the destination, flight altitude, and speed of the aircraft. There should also be an option to add waypoints. With the purpose of fire detection, it should include a mode that allows the user to select an area for scanning, letting the UAV roam above it.</p>
-    <p>Autopilot software dfdfd</p>
+    <p>To process this data, we are to use open source autopilot software, such as Px4 and ArduPilot. Both of these software use MAVlink (Micro Air Vehicle communication protocol) to communicate with the user/control station. To set the input parameters (route, waypoints) and monitor the vehicle, we can use a MAVlink based control station, like QGroundControl.</p>
+    <p> In case the user chooses an impossible route, an error should appear asking them to select different parameters or manually operate the UAV. If the error occurs while on air (obstacle, weather conditions, etc) the autopilot should re-plan its path using a path optimizing algorithm, or -in extreme conditions- land to the nearest safe point. Safe points could be pre-determined by the user for extra security.</p>
 </div>
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <div>
-    <h3>Αλγόριθμος του Dijkstra</h3>
+    <h3>Dijkstra Algorithm</h3>
     <p></p>
 </div>
 </div>
