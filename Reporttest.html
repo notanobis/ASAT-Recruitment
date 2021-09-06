@@ -13997,21 +13997,27 @@ Subsystem
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<div>
+<div style="margin-bottom: 100px">
     <h3>Autopilot Overview</h3>
     <p>For a UAV to be able to function autonomously, an interactive understanding of its environment is essential. To achieve that, the vehicle needs to integrate a series of sensors that will provide information on its location, orientation, speed, altitude, etc. Such sensors are a 3-axis gyroscope, a GPS (Global Positioning System), an accelerometer, an altimeter, and an airspeed sensor. Due to the objective of project Phoenix (fire detection), a thermal and a regular camera are required. For the UAV to be able to communicate and detect other aircraft, it can use ADS-B technology (Automatic Dependent Surveillance-Broadcast). The hardware mentioned above should comply with the pixhawk open standards to avoid unnecessary incompatibilities</p>
     <p>Apart from the sensor's data, the autopilot needs additional input from the user to plan its route accordingly. The user shall specify the destination, flight altitude, and speed of the aircraft. There should also be an option to add waypoints. With the purpose of fire detection, it should include a mode that allows the user to select an area for scanning, letting the UAV roam above it.</p>
     <p>To process this data, we are to use open source autopilot software, such as Px4 and ArduPilot. Both of these software use MAVlink (Micro Air Vehicle communication protocol) to communicate with the user/control station. To set the input parameters (route, waypoints) and monitor the vehicle, we can use a MAVlink based control station, like QGroundControl.</p>
     <p> In case the user chooses an impossible route, an error should appear asking them to select different parameters or manually operate the UAV. If the error occurs while on air (obstacle, weather conditions, etc) the autopilot should re-plan its path using a path optimizing algorithm, or -in extreme conditions- land to the nearest safe point. Safe points could be pre-determined by the user for extra security.</p>
+    <p>Finally, to ensure the correct operation of the system, we can run simulations in software such as AirSim (SITL), Gazebo, jMAVSim.</p>
 </div>
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <div>
-    <h3>Dijkstra Algorithm</h3>
-    <p></p>
+    <h3>Dijkstra's Algorithm</h3>
+    <p>Dijkstra's Algorithm is an algorithm for finding the shortest paths between nodes in a graph. In this implementation, we will be using a node as our base node (source) and computing the shortest path from the source to every other node.</p>
 </div>
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>To use certain math operations we import NumPy </p>
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
@@ -14027,6 +14033,17 @@ Subsystem
 </div>
 </div>
 
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>We are given 5 nodes:<br>
+Node 1 = connection[0] = [0,1,0,3,10]<br>
+Node 2 = connction[1] = [1, 0, 5, 0, 0]<br>
+.<br>.<br>.<br>
+Where each number inside the lists represents the weight (or difficulty) of the connection between the nodes.<br>
+For exampe: node 1 is not connected to itself (0), is connected to node 2 with a weight of 1 (easy to reach), is not connected to node 3, is connected to node 4 with a weight of 3 (slightly more difficult to reach), and is connected to node 5 with a weight of 10 (difficult to reach). <br>
+Based on this data we create the following list (you can think of it as an array, though in reality it is a python list):</p>
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
@@ -14047,6 +14064,11 @@ Subsystem
 </div>
 </div>
 
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>We know that our source node is node 1, so we use its index [0] to specify its value :</p>
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
@@ -14054,9 +14076,6 @@ Subsystem
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">baseNode</span><span class="o">=</span><span class="mi">0</span>
-<span class="n">weight</span><span class="o">=</span><span class="p">[]</span>
-<span class="n">unvisited</span><span class="o">=</span><span class="p">[]</span>
-<span class="n">minimum</span><span class="o">=</span><span class="mi">0</span>
 </pre></div>
 
      </div>
@@ -14064,16 +14083,29 @@ Subsystem
 </div>
 </div>
 
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>
+    We will be tracking the total path weight of each node (from the source node) in a list named weight_sum wich will contain as many elements as the nodes (5).<br>
+    We will also create a list named unvisited which will contain the indexes (of the weight_sum list) of the nodes that have not yet been completed.,<br>
+    The minimum could be any positive number, we just want to initialize it.<br>
+    Finally, we set the weight of the basenode to 0 (we are already there so the path is 0)
+</p>
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">connections</span><span class="p">)):</span>
-    <span class="n">weight</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">infty</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">weight_sum</span><span class="o">=</span><span class="p">[]</span>
+<span class="n">unvisited</span><span class="o">=</span><span class="p">[]</span>
+<span class="n">minimum</span><span class="o">=</span><span class="mi">0</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">connections</span><span class="p">)):</span>
+    <span class="n">weight_sum</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">infty</span><span class="p">)</span>
     <span class="n">unvisited</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-<span class="n">weight</span><span class="p">[</span><span class="n">baseNode</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span>
+<span class="n">weight_sum</span><span class="p">[</span><span class="n">baseNode</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span>
 </pre></div>
 
      </div>
@@ -14081,6 +14113,11 @@ Subsystem
 </div>
 </div>
 
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>The following piece of code finds the minimum weight_sum out of all the unvisited indexes, and visits that node to examine its neighboring nodes. <br>If the weight of the connection is 0, it ignores it (they are not connected). For non zero values it checks if this new path is shorter than the already registered and it updates the value to the minimum.<br> It removes the visited node from the unvisited list and resets the minimum to a large enough value that will allow the correct function of the loop.</p>
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
@@ -14089,14 +14126,14 @@ Subsystem
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">unvisited</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">unvisited</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">minimum</span><span class="o">&gt;=</span><span class="n">weight</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
-            <span class="n">minimum</span><span class="o">=</span><span class="n">weight</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-    <span class="n">i</span><span class="o">=</span><span class="n">weight</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">minimum</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">minimum</span><span class="o">&gt;=</span><span class="n">weight_sum</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="n">minimum</span><span class="o">=</span><span class="n">weight_sum</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">i</span><span class="o">=</span><span class="n">weight_sum</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">minimum</span><span class="p">)</span>
     <span class="n">unvisited</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">connections</span><span class="p">)):</span>
         <span class="k">if</span> <span class="n">connections</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">!=</span><span class="mi">0</span><span class="p">:</span>
-            <span class="n">weight</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">weight</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">weight</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="n">connections</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">])</span>
-    <span class="n">minimum</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="n">weight</span><span class="p">)</span>
+            <span class="n">weight_sum</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">weight_sum</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">weight_sum</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="n">connections</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">])</span>
+    <span class="n">minimum</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="n">weight_sum</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -14104,6 +14141,11 @@ Subsystem
 </div>
 </div>
 
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>The only thing left is to print the minimum weight sums of each node to the console:</p>
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
@@ -14116,7 +14158,7 @@ Subsystem
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Node    Distance</span><span class="se">\n</span><span class="s2">---------------&quot;</span><span class="p">)</span>
 
 <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">connections</span><span class="p">)):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\t\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">weight</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\t\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">weight_sum</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">==========================================&quot;</span><span class="p">)</span>
 </pre></div>
@@ -14159,19 +14201,6 @@ Node    Distance
 
 </div>
 
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<div>
-    <h3>Κατηγοριοποιήση ψηφίων</h3>
-    <p></p>
-</div>
-</div>
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-
-</div>
 </div>
 </body>
 
