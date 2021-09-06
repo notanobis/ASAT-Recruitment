@@ -14190,9 +14190,12 @@ Node 		 Weight-Sum/Distance
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3>
+<p><h3>
     Digit Classification
-</h3>
+</h3></p>
+<p>
+    In the following pieces of code we will create and train a deep learning model to recognize and classify handwritten digits. To do that we will be using tensorflow and numpy, which include functions that simplify the process:
+</p>
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
@@ -14209,6 +14212,11 @@ Node 		 Weight-Sum/Distance
 </div>
 </div>
 
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>To train our model we will be using the MNIST dataset; a collection of 60,000 training images of 28x28 px and 10,000 testing images of digits 0 to 9. The data are in a form of a tuple (x,y) where x is the image and y is the label. <br>For example if x is an image of the number 5 then y is 5. To load the data we type: </p>
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
@@ -14223,6 +14231,11 @@ Node 		 Weight-Sum/Distance
 </div>
 </div>
 
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>We now create two tuple that contein the data, one for training the model and one for testing:</p>
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
@@ -14237,6 +14250,11 @@ Node 		 Weight-Sum/Distance
 </div>
 </div>
 
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p> Because the x value represents the brightness of the pixel (the images are black and white), its maximum value would be 255. We devide by that value in order to get a float between 0 and 1 (1 being white and 0 black), representing the percentage of brightness.</p>
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
@@ -14252,6 +14270,15 @@ Node 		 Weight-Sum/Distance
 </div>
 </div>
 
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Now it's time to create the model. We will create three layers: The input layer, one hidden and the output layer.<br>
+ For the input we used .Flatten in order to use each pixel as one neuron (input) resulting to 28x28=784 input neurons.<br>
+ On the hidden layer we used 120 neurons (that number is relatively flexible) and the activation function relu, because we needed an output between 0 and 1. We could have used sigmoid or any other similar function, but relu seemed to have a higher accuracy.<br>
+ Finally for the output layer, we need 10 neurons, one for each digit. We chose the function softmax because it ranges from 0 to 1, while at the same time the sum of all outputs is 1, corrisponding to 100%. This is convinient, because we are checking how likely it is that the image is each digit, and then selecting the digit with the highest probability.
+ </p>
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
@@ -14270,6 +14297,11 @@ Node 		 Weight-Sum/Distance
 </div>
 </div>
 
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>We set the optimizer to Adam and the loss function to categorical crossentropy. </p>
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
@@ -14288,13 +14320,18 @@ Node 		 Weight-Sum/Distance
 </div>
 </div>
 
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Our model has not recieved any data at this point. To train it we use .fit and input the training data and labels, as well as the number of epochs. One epoch is one "pass" of the entire dataset through the model.</p>
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">training_data</span><span class="p">,</span><span class="n">training_labels</span><span class="p">,</span><span class="n">epochs</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">training_data</span><span class="p">,</span><span class="n">training_labels</span><span class="p">,</span><span class="n">epochs</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -14314,16 +14351,46 @@ Node 		 Weight-Sum/Distance
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>Epoch 1/5
-1875/1875 [==============================] - 6s 3ms/step - loss: 0.0355 - accuracy: 0.9887
-Epoch 2/5
-1875/1875 [==============================] - 5s 2ms/step - loss: 0.0283 - accuracy: 0.9911
-Epoch 3/5
-1875/1875 [==============================] - 5s 2ms/step - loss: 0.0220 - accuracy: 0.9930
-Epoch 4/5
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.0181 - accuracy: 0.9947
-Epoch 5/5
-1875/1875 [==============================] - 5s 3ms/step - loss: 0.0160 - accuracy: 0.9951
+<pre>Epoch 1/20
+1875/1875 [==============================] - 4s 2ms/step - loss: 0.0138 - accuracy: 0.9956
+Epoch 2/20
+1875/1875 [==============================] - 3s 2ms/step - loss: 0.0107 - accuracy: 0.9969
+Epoch 3/20
+1875/1875 [==============================] - 3s 2ms/step - loss: 0.0109 - accuracy: 0.9964
+Epoch 4/20
+1875/1875 [==============================] - 3s 2ms/step - loss: 0.0086 - accuracy: 0.9973
+Epoch 5/20
+1875/1875 [==============================] - 3s 2ms/step - loss: 0.0085 - accuracy: 0.9973
+Epoch 6/20
+1875/1875 [==============================] - 3s 2ms/step - loss: 0.0051 - accuracy: 0.9987
+Epoch 7/20
+1875/1875 [==============================] - 3s 2ms/step - loss: 0.0073 - accuracy: 0.9976
+Epoch 8/20
+1875/1875 [==============================] - 3s 2ms/step - loss: 0.0065 - accuracy: 0.9978
+Epoch 9/20
+1875/1875 [==============================] - 3s 2ms/step - loss: 0.0061 - accuracy: 0.9981
+Epoch 10/20
+1875/1875 [==============================] - 4s 2ms/step - loss: 0.0063 - accuracy: 0.9980
+Epoch 11/20
+1875/1875 [==============================] - 3s 2ms/step - loss: 0.0049 - accuracy: 0.9984
+Epoch 12/20
+1875/1875 [==============================] - 3s 2ms/step - loss: 0.0041 - accuracy: 0.9988
+Epoch 13/20
+1875/1875 [==============================] - 3s 2ms/step - loss: 0.0060 - accuracy: 0.9979
+Epoch 14/20
+1875/1875 [==============================] - 3s 2ms/step - loss: 0.0046 - accuracy: 0.9985
+Epoch 15/20
+1875/1875 [==============================] - 3s 2ms/step - loss: 0.0043 - accuracy: 0.9986
+Epoch 16/20
+1875/1875 [==============================] - 3s 2ms/step - loss: 0.0039 - accuracy: 0.9988
+Epoch 17/20
+1875/1875 [==============================] - 3s 2ms/step - loss: 0.0054 - accuracy: 0.9981
+Epoch 18/20
+1875/1875 [==============================] - 3s 2ms/step - loss: 0.0036 - accuracy: 0.9988
+Epoch 19/20
+1875/1875 [==============================] - 3s 2ms/step - loss: 0.0041 - accuracy: 0.9987
+Epoch 20/20
+1875/1875 [==============================] - 3s 2ms/step - loss: 0.0041 - accuracy: 0.9986
 </pre>
 </div>
 </div>
@@ -14337,7 +14404,7 @@ Epoch 5/5
 
 
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>&lt;keras.callbacks.History at 0x27c7bc18dc0&gt;</pre>
+<pre>&lt;keras.callbacks.History at 0x27c7f8d28e0&gt;</pre>
 </div>
 
 </div>
@@ -14346,6 +14413,11 @@ Epoch 5/5
 
 </div>
 
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>To check how well our model works on data it hasn't been trained on we use .evaluate and input the test data.</p>
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
@@ -14395,6 +14467,11 @@ Epoch 5/5
 
 </div>
 
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Finally, if we needed to make predictions about images of which we do not have the labels we would use .predict as follows</p>
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
@@ -14425,8 +14502,7 @@ Epoch 5/5
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>7
-[0.00000001 0.         0.00000001 0.00000004 0.         0.
- 0.         1.         0.         0.00000002]
+[0. 0. 0. 0. 0. 0. 0. 1. 0. 0.]
 </pre>
 </div>
 </div>
